@@ -6,7 +6,7 @@ function getComputerChoice() {
     } else if (choice == 2) {
         choice = "Paper";
     } else {
-        choice = "Scissors";
+        choice = "Scissor";
     }
     return choice;
 }
@@ -14,7 +14,8 @@ function getComputerChoice() {
 // Playing one round and declare the winner.
 // t = tie, w = win, l = loss, i = Invalid
 function playRound(playerSelection, computerSelection) {
-    playerSelection.toLowerCase();
+    playerSelection = playerSelection.toLowerCase();
+    console.log(playerSelection);
     if (playerSelection == "rock") {
         if (computerSelection == "Rock") {
             return "t";
@@ -52,25 +53,35 @@ function playRound(playerSelection, computerSelection) {
 function playGame() {
     let cpuPoints = 0;
     let plyPoints = 0;
-    // loop
-    let playerSelection = prompt("What is your play?")
-    const computerSelection = getComputerChoice();
-    let outcome = playRound(playerSelection, computerSelection);
-    if (outcome == "l") {
-        console.log("You lose :(");
-        cpuPoints += 1;
-    }else if (outcome =="w") {
-        console.log("You win! :D");
-        plyPoints += 1;
-    }else if (outcome == "t") {
-        console.log("It's a tie!");
-    }else {
-        console.log("Invalid Play!");
+    let ties = 0;
+    
+    for (let i =0; i < 5; i++) {
+        let playerSelection = prompt("What is your play?")
+        let computerSelection = getComputerChoice();
+        let outcome = playRound(playerSelection, computerSelection);
+        if (outcome == "l") {
+            console.log("You lose :(");
+            cpuPoints += 1;
+        }else if (outcome =="w") {
+            console.log("You win! :D");
+            plyPoints += 1;
+        }else if (outcome == "t") {
+            console.log("It's a tie!");
+            ties += 1;
+        }else {
+            console.log("Invalid Play!");
+        }
     }
 
     if (cpuPoints > plyPoints) {
-        console.log("The computer won! Womp. Womp")
+        console.log("The computer won! Womp. Womp. CPU:" + cpuPoints + " You:" + plyPoints + " Ties:" + ties);
+    }else if (cpuPoints < plyPoints) {
+        console.log("You won! Congrats! CPU:" + cpuPoints + " You:" + plyPoints + " Ties:" + ties);
+    }else if (cpuPoints == plyPoints){
+        console.log("It's a tie! CPU:" + cpuPoints + " You:" + plyPoints + " Ties:" + ties);
+    }else {
+        console.log("FATAL ERROR D: CPU:" + cpuPoints + " You:" + plyPoints + " Ties:" + ties);
     }
 }
 
-console.log(playRound(playerSelection, computerSelection));
+console.log(playGame());
