@@ -1,3 +1,12 @@
+const cont = document.querySelector("#container");
+const div = document.createElement("div");
+const message = document.createElement("div");
+const score = document.createElement("div");
+let cpuPoints = 0;
+let plyPoints = 0;
+let ties = 0;
+let noWinner = true;
+
 // Generates computer choice
 function getComputerChoice() {
     let choice = Math.floor(Math.random()*3) + 1;
@@ -8,14 +17,17 @@ function getComputerChoice() {
     } else {
         choice = "Scissor";
     }
+    div.textContent = "CPU selection: " + choice;
     return choice;
 }
+
+
 
 // Playing one round and declare the winner.
 // t = tie, w = win, l = loss, i = Invalid
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
-    console.log(playerSelection);
+    div.textContent = "Your selection: " + playerSelection + " || CPU selection: " + computerSelection.toLowerCase();
     if (playerSelection == "rock") {
         if (computerSelection == "Rock") {
             return "t";
@@ -49,39 +61,66 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-// Playing 5 rounds and keep total score
-function playGame() {
-    let cpuPoints = 0;
-    let plyPoints = 0;
-    let ties = 0;
-    
-    for (let i =0; i < 5; i++) {
-        let playerSelection = prompt("What is your play?")
-        let computerSelection = getComputerChoice();
-        let outcome = playRound(playerSelection, computerSelection);
-        if (outcome == "l") {
-            console.log("You lose :(");
-            cpuPoints += 1;
-        }else if (outcome =="w") {
-            console.log("You win! :D");
-            plyPoints += 1;
-        }else if (outcome == "t") {
-            console.log("It's a tie!");
-            ties += 1;
-        }else {
-            console.log("Invalid Play!");
-        }
-    }
 
-    if (cpuPoints > plyPoints) {
-        console.log("The computer won! Womp. Womp. CPU:" + cpuPoints + " You:" + plyPoints + " Ties:" + ties);
-    }else if (cpuPoints < plyPoints) {
-        console.log("You won! Congrats! CPU:" + cpuPoints + " You:" + plyPoints + " Ties:" + ties);
-    }else if (cpuPoints == plyPoints){
-        console.log("It's a tie! CPU:" + cpuPoints + " You:" + plyPoints + " Ties:" + ties);
-    }else {
-        console.log("FATAL ERROR D: CPU:" + cpuPoints + " You:" + plyPoints + " Ties:" + ties);
-    }
+
+
+function playGame(playerSelection) {
+
+        if(plyPoints > 4) {
+            div.textContent = "";
+            score.textContent = "";
+            message.textContent = "You won the match. Congrats! :D";
+        }else if(cpuPoints > 4) {
+            div.textContent = "";
+            score.textContent = "";
+            message.textContent = "You lose the match. :(";
+        }else{
+            console.log("MAde is past the points");
+            let computerSelection = getComputerChoice();
+            let outcome = playRound(playerSelection, computerSelection);
+            if (outcome == "l") {
+                
+                message.textContent = "You lose :(";
+                cpuPoints += 1;
+            }else if (outcome =="w") {
+                
+                message.textContent = "You win! :D";
+                plyPoints += 1;
+            }else if (outcome == "t") {
+                
+                message.textContent = "It's a tie!";
+                ties += 1;
+            }else {
+                
+                message.textContent = "Invalid Play!";
+            }
+        
+            score.textContent = "Your Points: " + plyPoints + " || CPU Points: " + cpuPoints + " || Ties: " + ties;
+        }
 }
 
-console.log(playGame());
+// console.log(playGame());
+
+const rck = document.querySelector("#rock");
+const ppr = document.querySelector("#paper");
+const scr = document.querySelector("#scissor");
+
+
+rck.addEventListener("click", () => {
+playGame("rock");
+});
+ppr.addEventListener("click", () => {
+playGame("paper");
+});
+scr.addEventListener("click", () => {
+playGame("scissor");
+});
+
+
+
+cont.appendChild(div);
+cont.appendChild(message);
+cont.appendChild(score);
+
+
+
