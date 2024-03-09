@@ -5,8 +5,6 @@ const score = document.createElement("div");
 let cpuPoints = 0;
 let plyPoints = 0;
 let ties = 0;
-let noWinner = true;
-
 // Generates computer choice
 function getComputerChoice() {
     let choice = Math.floor(Math.random()*3) + 1;
@@ -62,41 +60,42 @@ function playRound(playerSelection, computerSelection) {
 }
 
 
+   
+
+
 
 
 function playGame(playerSelection) {
 
-        if(plyPoints > 4) {
-            div.textContent = "";
-            score.textContent = "";
-            message.textContent = "You won the match. Congrats! :D";
-        }else if(cpuPoints > 4) {
-            div.textContent = "";
-            score.textContent = "";
-            message.textContent = "You lose the match. :(";
-        }else{
-            console.log("MAde is past the points");
-            let computerSelection = getComputerChoice();
-            let outcome = playRound(playerSelection, computerSelection);
-            if (outcome == "l") {
-                
-                message.textContent = "You lose :(";
-                cpuPoints += 1;
-            }else if (outcome =="w") {
-                
-                message.textContent = "You win! :D";
-                plyPoints += 1;
-            }else if (outcome == "t") {
-                
-                message.textContent = "It's a tie!";
-                ties += 1;
-            }else {
-                
-                message.textContent = "Invalid Play!";
-            }
+
+    console.log("MAde is past the points");
+    let computerSelection = getComputerChoice();
+    let outcome = playRound(playerSelection, computerSelection);
+    if (outcome == "l") {
         
-            score.textContent = "Your Points: " + plyPoints + " || CPU Points: " + cpuPoints + " || Ties: " + ties;
-        }
+        message.textContent = "You lose :(";
+        cpuPoints += 1;
+    }else if (outcome =="w") {
+        
+        message.textContent = "You win! :D";
+        plyPoints += 1;
+    }else if (outcome == "t") {
+        
+        message.textContent = "It's a tie!";
+        ties += 1;
+    }else {
+        
+        message.textContent = "Invalid Play!";
+    }
+    if(plyPoints > 4) {
+        score.textContent = "GAME OVER";
+        message.textContent = "You won the match. Congrats! :D";
+    }else if(cpuPoints > 4) {
+        score.textContent = "GAME OVER";
+        message.textContent = "You lose the match. :(";
+    }else{
+    score.textContent = "Your Points: " + plyPoints + " || CPU Points: " + cpuPoints + " || Ties: " + ties;
+    }
 }
 
 // console.log(playGame());
@@ -107,13 +106,13 @@ const scr = document.querySelector("#scissor");
 
 
 rck.addEventListener("click", () => {
-playGame("rock");
+        playGame("rock");
 });
 ppr.addEventListener("click", () => {
-playGame("paper");
+        playGame("paper");
 });
 scr.addEventListener("click", () => {
-playGame("scissor");
+        playGame("scissor");
 });
 
 
